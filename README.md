@@ -28,6 +28,13 @@ A content-creator studio wants to mass-produce high-engagement **vertical videos
 
 ---
 
+## Case assistance  
+
+In case you need technical, conceptual, or other assistance, please refer to the provided [guide](guide.md). Also, have in mind that these technologies are quite popular and evolving quickly, so a simple google/tiktok/GPT search would result in many useful materials.
+
+
+---
+
 ## Deliverables
 
 1. **`workflow.json`** – the n8n workflow export, ready to import.  
