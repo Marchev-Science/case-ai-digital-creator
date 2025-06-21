@@ -29,7 +29,7 @@ A content-creator studio wants to mass-produce high-engagement **vertical videos
 ## Deliverables
 
 1. **`workflow.json`** – the n8n workflow export, ready to import.  
-2. **`README.md`** (≤ 2 pages) – minimal setup guide detailing required environment variables, API keys, and how to run the workflow.  
+2. **`README.md`** (≤ 2 pages) – minimal setup guide detailing required environment variables, API keys, setting-up local n8n, and how to run the workflow.  
 3. **Demo** – screen-capture or live presentation showing a full run that ends with a live or unlisted post on each required platform.  
 4. **(Optional)** Source-asset cache (sample generated scripts, audio, images) for verification.
 
