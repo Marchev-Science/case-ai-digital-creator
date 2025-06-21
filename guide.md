@@ -1,4 +1,4 @@
-# Hackathon Challenge: AI-Driven Content Generator with n8n & GPT
+# AI-Driven Content Generator with n8n & GPT
 
 ## Introduction  
 In this hackathon challenge, you’ll build an **automated content generation and dissemination system** using **n8n** (a no-code workflow tool) and **GPT/LLM** technology. The goal is to automatically create short **vertical videos** (for Instagram Reels, TikTok, YouTube Shorts, etc.) on trending topics, complete with voiceover, music, visuals, captions, and even automated posting. This guide will walk you through a step-by-step plan – from picking a hot topic to publishing the finished video – using mostly **free or open-source tools**. By the end, you’ll have a workflow that can turn a simple topic idea into an engaging video *and* share it on social platforms with minimal manual effort.
@@ -57,7 +57,7 @@ Before building the workflow, make sure you have the following ready:
 
 Now that everything is set up, let’s break down the workflow into steps and build it up.
 
-## Step 1: Selecting Trending Content Topics  
+## Selecting Trending Content Topics  
 The first step is to get a *trending or engaging topic* in your chosen domain. For example, if your domain is “health & fitness,” a trending topic might be “High-Intensity Interval Training benefits” or “Top 5 Keto Diet Myths”. We want this to be autonomous if possible, so the system can pick something timely that people care about.
 
 **How to find trending topics?** Here are a few approaches:
@@ -75,7 +75,7 @@ The first step is to get a *trending or engaging topic* in your chosen domain. F
 
 **Note:** If using GPT to select the topic, ensure you don’t accidentally pick a too-general or uninteresting topic. You can refine the prompt with criteria (e.g., “choose a topic that is currently trending and will be engaging to a general audience interested in X domain”). If using Google Trends directly, you might already get very hot topics (but sometimes unrelated to your domain). Feel free to experiment here – this part can be as simple or complex as you want. For the hackathon, even a static topic or a random pick from a prepared list is acceptable if time is short.
 
-## Step 2: Generating a Script with GPT  
+## Generating a Script with GPT  
 Now that we have a topic, the next step is to generate the **script or narration** for our short video. This will be a textual content piece – usually a few paragraphs or bullet points that will be spoken and shown as captions.
 
 **What makes a good script for Reels/Shorts?** It should be **short (30-60 seconds)**, engaging from the start (hook the viewer in the first few seconds), and possibly include a call-to-action or conclusion. It can be informative or entertaining, depending on your content style.
@@ -91,17 +91,17 @@ In n8n, you can utilize the **OpenAI node** (or an HTTP node calling the OpenAI 
 
 Remember to **preserve this script text** in the workflow for subsequent nodes. In n8n, the text can be passed along as JSON fields (e.g., `{ "script": "text here..." }`). The upcoming steps (TTS, captioning) will use this.
 
-## Step 3: Converting the Script into a Video  
+## Converting the Script into a Video  
 This is the most involved step – we take the script and produce a video complete with voiceover, visuals, music, and captions. We’ll break this into sub-tasks:
 
-### 3.1 Voiceover Generation (Text-to-Speech)  
+### Voiceover Generation (Text-to-Speech)  
 To give our video a voice, we need to convert the script text to spoken audio. We’ll use a Text-to-Speech API for this. 
 
 **Using Voice RSS API (Free method):** VoiceRSS is a straightforward choice for quick TTS:
 - **API Call:** VoiceRSS requires a GET or POST request with your API key and text. For example:  
 ```
 
-GET [http://api.voicerss.org/?key=YOUR\_API\_KEY\&hl=en-us\&c=MP3\&src=Hello](http://api.voicerss.org/?key=YOUR_API_KEY&hl=en-us&c=MP3&src=Hello), world!
+GET [http://api.voicerss.org/?key=YOUR\_API\_KEY\&hl=en-us\&c=MP3\&src=Hello](http://api.voicerss.org/?key=YOUR_API_KEY&hl=en-us&c=MP3&src=Hello
 
 ```
 This would return an MP3 audio saying “Hello, world!” in English. We specify `c=MP3` to get an MP3 file, and `hl=en-us` for language/accent. You can also choose a voice (`&v=` parameter) if multiple voices are available for the language.  
@@ -117,7 +117,7 @@ At the end of this step, you should have an **audio file** (MP3 or WAV) of the v
 
 💡 *Tip:* Use a neutral or cheerful voice that matches the content. VoiceRSS’s default might be okay, but test a snippet. Some APIs let you choose male/female voices or different accents. Also, ensure the spoken speed is okay – some APIs allow adjusting speed (`&r=` in VoiceRSS). The default is usually fine for a short script.
 
-### 3.2 Background Music Integration  
+### Background Music Integration  
 Adding background music can greatly enhance the video’s appeal, making it more dynamic. Since we plan to automate, we need a source for music that doesn’t require manual selection each time (unless you just use one track universally).
 
 **Options for music:**
@@ -134,7 +134,7 @@ During the FFmpeg assembly, we will mix this music audio with the voiceover audi
 
 For now, confirm you have a music track and know its location or URL. We won’t actually process it until the assembly step.
 
-### 3.3 Visuals and Imagery  
+### Visuals and Imagery  
 Visuals are the background of your video – what the viewer sees as the narration plays and text captions appear. Depending on your approach, you can use **static images**, a **slideshow of images**, or even short **video clips**. 
 
 For a beginner-friendly route, we recommend using one or a few **static images** or illustrations that relate to the script. More advanced participants could use multiple images or a video clip.
@@ -168,7 +168,7 @@ At this point, you should have either:
 - A background **image file** (e.g., `background.jpg`) and its resolution. If it’s not already 1080x1920, don’t worry – FFmpeg can scale it to fit.  
 - Or a **video clip file** (e.g., `clip.mp4`). If the clip is longer than your voiceover, we’ll trim it; if shorter, we can loop it or freeze-frame it (again, FFmpeg can handle that with `-stream_loop` or image looping).
 
-### 3.4 Adding On-Screen Captions  
+### Adding On-Screen Captions  
 Captions (subtitles) are crucial for engagement on silent autoplay platforms. We want the spoken words of the script to also appear as text on the video. There are a few ways to do this, varying in complexity:
 
 **Basic static caption:** Easiest method is to just put all the script text on screen for the entire video. However, this is not ideal if the script is long – it would appear as a big block of text. But if your script is just one or two short sentences (like a quote), it can work (as seen in the n8n quote video template which overlays a quote and author on the video). For more than a couple of lines, it’s better to time the text.
@@ -192,7 +192,7 @@ We’ll proceed with a simple method: in the FFmpeg command, include one drawtex
 
 *(If you prefer not to burn in subtitles with FFmpeg, another option is to generate an .srt file and upload that alongside the video on platforms like YouTube. But Reels/TikTok don’t accept separate subtitle files at upload time, they need them burned in or you use their editor. So burning in is the way to go for multi-platform.)*
 
-### 3.5 Assembling the Video with FFmpeg  
+### Assembling the Video with FFmpeg  
 Now comes the “movie magic” – combining voiceover audio, background music, visuals, and text into the final video file. We will construct an FFmpeg command that does the following:
 - Takes the background visual (image or video) as the video input.  
 - If it’s an image, we tell FFmpeg to treat it as a video stream (e.g., loop a single image for the duration of the audio).  
@@ -266,7 +266,7 @@ When the Execute Command runs, if all goes well, you’ll get `output.mp4` gener
 
 *(Don’t be discouraged if FFmpeg’s learning curve is steep – even experienced devs tinker a lot. The n8n template for quote videos proves it’s doable: they generated 9:16 videos with text and music via FFmpeg on local n8n. Use their approach as inspiration and feel free to search for “FFmpeg overlay text video” for syntax help. Once it works the first time, you’re golden.)*
 
-## Step 4: Formatting for Reels, TikTok, YouTube Shorts
+## Formatting for Reels, TikTok, YouTube Shorts
 
 By design, we’ve been targeting the vertical format all along. But let’s explicitly ensure we meet the requirements of the platforms:
 
@@ -279,7 +279,7 @@ One more thing: some platforms (Instagram) might auto-crop if the video isn’t 
 
 In summary, if you followed the above, your output.mp4 is ready for all four platforms mentioned, with no further changes needed for each specifically. The same file can be posted to each platform (you might tailor the caption text per platform, but the video itself can be identical).
 
-## Step 5: Publishing the Content (Posting Automation)
+## Publishing the Content (Posting Automation)
 
 With the video created, the final step is to (at least partially) automate publishing it on social media. Full automation can be tricky due to API restrictions, but here are some ways to tackle it:
 
@@ -300,7 +300,7 @@ If you do want to attempt one platform, YouTube is a good choice because it’s 
 
 Make sure when posting (or simulating) to also include the title/description/hashtags we generate in the next step.
 
-## Step 6: Optimizing Engagement (Titles, Hashtags, Scheduling)
+## Optimizing Engagement (Titles, Hashtags, Scheduling)
 
 Finally, to maximize the reach and engagement of your content, you should generate a catchy **title** or caption and some **hashtags**, and consider the posting schedule.
 
@@ -373,6 +373,3 @@ Good luck, and enjoy hacking on this AI-powered content creator! We can’t wait
 * Pexels API documentation – free stock media API usage (we used it for images/videos).
 * n8n Template: *“Automate Multi-Platform Social Media Content Creation”* – demonstrates GPT-4 content generation with hashtags and posting via APIs.
 * Reddit Post: *“AI-Powered Automation for Long-Form Videos”* – an example of a sophisticated pipeline using n8n, GPT-4, image generation, and FFmpeg with complex scene editing – proving the sky is the limit if you want to push this project further after the hackathon!
-
-```
-```
