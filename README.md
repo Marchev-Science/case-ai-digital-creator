@@ -3,6 +3,8 @@
 ## Context  
 A content-creator studio wants to mass-produce high-engagement **vertical videos** (Reels / Shorts / TikToks) with **zero** human effort. Your job is to build an **end-to-end automation pipeline** in **n8n** that ideates a topic, generates all media assets, assembles a 9 : 16 video, and publishes it on **Instagram, TikTok, _and_ YouTube Shorts**—all without manual intervention.
 
+![](https://community.n8n.io/uploads/default/original/3X/7/9/7999c827c703571da7adff0a92672c31fd848755.jpeg)
+
 ---
 
 ## Your automation in n8n should do the following
